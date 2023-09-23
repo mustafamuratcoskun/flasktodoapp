@@ -12,12 +12,13 @@ def index():
 @app.route("/complete/<string:id>")
 def completeTodo(id):
     todo = Todo.query.filter_by(id = id).first()
-    """if todo.complete == True:
+    """
+    if todo.complete == True:
         todo.complete = False
     else:
-        todo.complete = True"""
+        todo.complete = True
+    """
     todo.complete = not todo.complete
-
     db.session.commit()
     return redirect(url_for("index"))
 
@@ -27,7 +28,6 @@ def addTodo():
     newTodo = Todo(title = title,complete = False)
     db.session.add(newTodo)
     db.session.commit()
-
     return redirect(url_for("index"))
 
 @app.route("/delete/<string:id>")
