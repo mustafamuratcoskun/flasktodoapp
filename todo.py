@@ -1,5 +1,4 @@
 from flask import Flask,render_template,redirect,url_for,request
-
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -9,6 +8,7 @@ db = SQLAlchemy(app)
 def index():
     todos = Todo.query.all()
     return render_template("index.html",todos = todos)
+
 @app.route("/complete/<string:id>")
 def completeTodo(id):
     todo = Todo.query.filter_by(id = id).first()
@@ -20,6 +20,7 @@ def completeTodo(id):
 
     db.session.commit()
     return redirect(url_for("index"))
+
 @app.route("/add",methods = ["POST"])
 def addTodo():
     title = request.form.get("title")
@@ -28,7 +29,6 @@ def addTodo():
     db.session.commit()
 
     return redirect(url_for("index"))
-
 
 @app.route("/delete/<string:id>")
 def deleteTodo(id):
@@ -43,5 +43,6 @@ class Todo(db.Model):
     complete = db.Column(db.Boolean)
 
 if __name__ == "__main__":
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
