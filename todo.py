@@ -1,8 +1,15 @@
 from flask import Flask,render_template,redirect,url_for,request
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/user/Desktop/TodoApp/todo.db'
+
+# database
+app_path = os.path.dirname(os.path.abspath(__file__))
+db_name = "todo.db"
+db_path = os.path.join(app_path, db_name)
+sqlite_path = 'sqlite:///' + db_path
+app.config['SQLALCHEMY_DATABASE_URI'] = sqlite_path
 db = SQLAlchemy(app)
 
 @app.route("/")
