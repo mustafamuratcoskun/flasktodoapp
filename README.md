@@ -1,1 +1,4 @@
-"# Flask Todo App" 
+# Flask Todo App
+
+## Run
+> python todo.py
